@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Investimento</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        /* Estilo base para o container */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px; /* Define a largura máxima do container */
+            margin: 0 auto; /* Centraliza o container na página */
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column; /* Alinha os itens em coluna */
+            gap: 15px; /* Espaçamento entre os itens do formulário */
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input, select, button {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #28a745; /* Cor do botão */
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s; /* Efeito de transição */
+        }
+
+        button:hover {
+            background-color: #218838; /* Cor do botão ao passar o mouse */
+        }
+
+        .doacao {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .result {
+            margin-top: 20px;
+            background: #e9ecef;
+            padding: 15px;
+            border-radius: 4px;
+        }
+
+        .error {
+            color: red;
+            text-align: center;
+        }
+
+        /* Estilos responsivos */
+        @media (max-width: 600px) {
+            .container {
+                padding: 10px;
+            }
+
+            button {
+                font-size: 14px;
+            }
+
+            input, select {
+                font-size: 14px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Calculadora de Investimento</h1>
+        <form method="POST">
+            <label for="investimento_inicial">Investimento inicial (em dólares):</label>
+            <input type="number" step="0.01" id="investimento_inicial" name="investimento_inicial" required>
+
+            <label for="taxa_lucro">Taxa de lucro ao fim do prazo (%):</label>
+            <input type="number" step="0.01" id="taxa_lucro" name="taxa_lucro" required>
+
+            <label for="prazo_tipo">Escolha o prazo:</label>
+            <select id="prazo_tipo" name="prazo_tipo">
+                <option value="quinzenal">Quinzenal (15 dias)</option>
+                <option value="mensal">Mensal (30 dias)</option>
+            </select>
+
+            <label for="objetivo_retorno">Objetivo de retorno (em dólares):</label>
+            <input type="number" step="0.01" id="objetivo_retorno" name="objetivo_retorno" required>
+
+            <label for="taxa_cambio">Taxa de câmbio (USD/BRL):</label>
+            <input type="number" step="0.01" id="taxa_cambio" name="taxa_cambio" required>
+
+            <button type="submit">Calcular</button>
+        </form>
+
+        <!-- Adicionar o botão de doação -->
+        <div class="doacao">
+            <p>Gostou da calculadora? Considere fazer uma doação!</p>
+            <a href="https://nubank.com.br/cobrar/8h0y9o/67016df4-25df-4e29-b894-6b36320ba169" target="_blank">
+                <button class="doar-btn">Fazer Doação</button>
+            </a>
+        </div>
+
+        {% if resultado %}
+        <div class="result">
+            <h2>Resultados</h2>
+            <p>Investimento Inicial: ${{ investimento_inicial | default(0) | round(2) }}</p>
+            <p>Rendimento Total ao fim do prazo: ${{ rendimento_total | default(0) | round(2) }} / R$ {{ rendimento_total_reais | default(0) | round(2) }}</p>
+            <p>Número de reinvestimentos necessários para atingir o objetivo: {{ reinvestimentos | default(0) }}</p>
+            <p>Valor Acumulado ao final: ${{ valor_acumulado | default(0) | round(2) }}</p>
+            <p>Objetivo desejado de retorno: ${{ objetivo_retorno | default(0) | round(2) }}</p>
+            <p>Prazo escolhido: {{ prazo_tipo | capitalize }}</p>
+            <p>Taxa de câmbio utilizada: R$ {{ taxa_cambio | default(0) | round(2) }}</p>
+            <p>Total de dias para alcançar o objetivo: {{ total_dias }} dias (aproximadamente {{ total_meses }} meses e {{ dias_restantes }} dias)</p>
+            <p>{{ aviso_variacao }}</p>
+        </div>
+        {% elif error %}
+        <div class="error">{{ error }}</div>
+        {% endif %}
+    </div>
+</body>
+</html>
+
+
+
