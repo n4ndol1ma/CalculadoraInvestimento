@@ -56,7 +56,7 @@
             background-color: #218838; /* Cor do botão ao passar o mouse */
         }
 
-        .doacao {
+        .doacao, .compartilhar {
             text-align: center;
             margin-top: 20px;
         }
@@ -129,6 +129,12 @@
             </a>
         </div>
 
+        <!-- Botão para compartilhar -->
+        <div class="compartilhar">
+            <p>Ajude a divulgar esta calculadora:</p>
+            <button onclick="compartilhar()">Compartilhar</button>
+        </div>
+
         <div id="resultContainer"></div>
     </div>
 
@@ -177,6 +183,19 @@
                 </div>
             `;
         });
+
+        function compartilhar() {
+            const url = window.location.href; // Obtém a URL atual
+            const texto = "Confira esta calculadora de investimento incrível!"; // Texto para o compartilhamento
+            const plataformas = [
+                `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`,
+                `https://twitter.com/intent/tweet?text=${encodeURIComponent(texto)}&url=${encodeURIComponent(url)}`,
+                `https://wa.me/?text=${encodeURIComponent(texto + ' ' + url)}`
+            ];
+
+            // Abre cada plataforma em uma nova aba
+            plataformas.forEach(link => window.open(link, '_blank'));
+        }
     </script>
 </body>
 </html>
