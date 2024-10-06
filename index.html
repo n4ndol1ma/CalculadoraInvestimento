@@ -15,8 +15,8 @@
         }
 
         .container {
-            max-width: 800px; /* Define a largura máxima do container */
-            margin: 0 auto; /* Centraliza o container na página */
+            max-width: 800px;
+            margin: 0 auto;
             padding: 20px;
             background: #fff;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -30,8 +30,8 @@
 
         form {
             display: flex;
-            flex-direction: column; /* Alinha os itens em coluna */
-            gap: 15px; /* Espaçamento entre os itens do formulário */
+            flex-direction: column;
+            gap: 15px;
         }
 
         label {
@@ -46,14 +46,14 @@
         }
 
         button {
-            background-color: #28a745; /* Cor do botão */
+            background-color: #28a745;
             color: white;
             cursor: pointer;
-            transition: background-color 0.3s; /* Efeito de transição */
+            transition: background-color 0.3s;
         }
 
         button:hover {
-            background-color: #218838; /* Cor do botão ao passar o mouse */
+            background-color: #218838;
         }
 
         .doacao, .compartilhar {
@@ -132,7 +132,7 @@
         <!-- Botão para compartilhar -->
         <div class="compartilhar">
             <p>Ajude a divulgar esta calculadora:</p>
-            <button onclick="compartilhar()">Compartilhar</button>
+            <button id="compartilharBtn">Compartilhar</button>
         </div>
 
         <div id="resultContainer"></div>
@@ -154,14 +154,14 @@
             const diasPorPrazo = prazoTipo === 'quinzenal' ? 15 : 30;
             let rendimentoTotal = investimentoInicial;
             let reinvestimentos = 0;
-            let totalMeses = 0; // Mudar totalDias para totalMeses
+            let totalMeses = 0;
 
             // Calculando o rendimento total e o número de reinvestimentos
             while (rendimentoTotal < objetivoRetorno) {
                 rendimentoTotal += rendimentoTotal * taxaLucro;
                 reinvestimentos++;
-                totalMeses += (prazoTipo === 'quinzenal' ? 0.5 : 1); // Incrementa 0.5 para quinzenal e 1 para mensal
-                rendimentoTotal += aporteMensal; // Adicionando aporte mensal
+                totalMeses += (prazoTipo === 'quinzenal' ? 0.5 : 1);
+                rendimentoTotal += aporteMensal;
             }
 
             // Convertendo rendimento total para reais
@@ -179,23 +179,26 @@
                     <p>Objetivo desejado de retorno: $${objetivoRetorno.toFixed(2)}</p>
                     <p>Prazo escolhido: ${prazoTipo.charAt(0).toUpperCase() + prazoTipo.slice(1)}</p>
                     <p>Taxa de câmbio utilizada: R$ ${taxaCambio.toFixed(2)}</p>
-                    <p>Total de meses para alcançar o objetivo: ${Math.ceil(totalMeses)} meses</p> <!-- Mudou de dias para meses -->
+                    <p>Total de meses para alcançar o objetivo: ${Math.ceil(totalMeses)} meses</p>
                 </div>
             `;
         });
 
-        function compartilhar() {
-            const url = window.location.href; // Obtém a URL atual
-            const texto = "Confira esta calculadora de investimento incrível!"; // Texto para o compartilhamento
-            const plataformas = [
-                `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`,
-                `https://twitter.com/intent/tweet?text=${encodeURIComponent(texto)}&url=${encodeURIComponent(url)}`,
-                `https://wa.me/?text=${encodeURIComponent(texto + ' ' + url)}`
-            ];
-
-            // Abre cada plataforma em uma nova aba
-            plataformas.forEach(link => window.open(link, '_blank'));
-        }
+        // Função para compartilhar usando a Web Share API
+        document.getElementById('compartilharBtn').addEventListener('click', function() {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Calculadora de Investimento',
+                    text: 'Confira esta calculadora de investimento incrível!',
+                    url: window.location.href
+                })
+                .then(() => console.log('Compartilhamento bem-sucedido!'))
+                .catch((error) => console.log('Erro ao compartilhar:', error));
+            } else {
+                alert('A API de compartilhamento não é suportada neste navegador.');
+            }
+        });
     </script>
 </body>
 </html>
+
