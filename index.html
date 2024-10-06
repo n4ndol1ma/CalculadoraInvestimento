@@ -8,8 +8,9 @@
     <style>
         /* Estilo base para o container */
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            font-family: 'Roboto', sans-serif;
+            background-color: #121212; /* Cor de fundo escura */
+            color: #e0e0e0; /* Texto claro para contraste */
             margin: 0;
             padding: 0;
         }
@@ -18,14 +19,15 @@
             max-width: 800px;
             margin: 0 auto;
             padding: 20px;
-            background: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #1f1f1f; /* Fundo do container mais escuro */
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
             border-radius: 8px;
         }
 
         h1 {
             text-align: center;
-            color: #333;
+            color: #e0e0e0; /* Cor de texto clara */
+            margin-bottom: 20px;
         }
 
         form {
@@ -36,24 +38,32 @@
 
         label {
             font-weight: bold;
+            color: #b0b0b0; /* Texto sutilmente mais claro */
         }
 
         input, select, button {
             padding: 10px;
-            border: 1px solid #ccc;
+            border: 1px solid #333;
             border-radius: 4px;
             font-size: 16px;
+            background-color: #2c2c2c; /* Input escuro */
+            color: #e0e0e0; /* Texto claro */
+        }
+
+        input::placeholder {
+            color: #888;
         }
 
         button {
-            background-color: #28a745;
+            background-color: #28a745; /* Botão de destaque verde */
             color: white;
             cursor: pointer;
             transition: background-color 0.3s;
+            border: none;
         }
 
         button:hover {
-            background-color: #218838;
+            background-color: #218838; /* Cor mais escura no hover */
         }
 
         .doacao, .compartilhar {
@@ -63,9 +73,10 @@
 
         .result {
             margin-top: 20px;
-            background: #e9ecef;
+            background-color: #2b2b2b; /* Fundo dos resultados mais escuro */
             padding: 15px;
             border-radius: 4px;
+            color: #f1f1f1; /* Cor de texto clara */
         }
 
         .error {
