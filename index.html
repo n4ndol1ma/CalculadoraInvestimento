@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculadora de Investimento</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="style.css"> <!-- Certifique-se de que o style.css está na mesma pasta -->
     <style>
         /* Estilo base para o container */
         body {
@@ -96,27 +96,27 @@
 <body>
     <div class="container">
         <h1>Calculadora de Investimento</h1>
-        <form method="POST" id="investmentForm">
+        <form id="investmentForm">
             <label for="investimento_inicial">Investimento inicial (em dólares):</label>
-            <input type="number" step="0.01" id="investimento_inicial" name="investimento_inicial" required>
+            <input type="number" step="0.01" id="investimento_inicial" required>
 
             <label for="taxa_lucro">Taxa de lucro ao fim do prazo (%):</label>
-            <input type="number" step="0.01" id="taxa_lucro" name="taxa_lucro" required>
+            <input type="number" step="0.01" id="taxa_lucro" required>
 
             <label for="prazo_tipo">Escolha o prazo:</label>
-            <select id="prazo_tipo" name="prazo_tipo">
+            <select id="prazo_tipo">
                 <option value="quinzenal">Quinzenal (15 dias)</option>
                 <option value="mensal">Mensal (30 dias)</option>
             </select>
 
             <label for="objetivo_retorno">Objetivo de retorno (em dólares):</label>
-            <input type="number" step="0.01" id="objetivo_retorno" name="objetivo_retorno" required>
+            <input type="number" step="0.01" id="objetivo_retorno" required>
 
             <label for="taxa_cambio">Taxa de câmbio (USD/BRL):</label>
-            <input type="number" step="0.01" id="taxa_cambio" name="taxa_cambio" required>
+            <input type="number" step="0.01" id="taxa_cambio" required>
 
             <label for="aporte_mensal">Aportes Mensais (em dólares):</label>
-            <input type="number" step="0.01" id="aporte_mensal" name="aporte_mensal" placeholder="Insira o valor dos aportes" required>
+            <input type="number" step="0.01" id="aporte_mensal" placeholder="Insira o valor dos aportes" required>
 
             <button type="submit">Calcular</button>
         </form>
@@ -129,44 +129,54 @@
             </a>
         </div>
 
-        <!-- Adicione um ID à div de resultados -->
-        <div id="resultContainer">
-            {% if resultado %}
-            <div class="result">
-                <h2>Resultados</h2>
-                <p>Investimento Inicial: ${{ investimento_inicial | default(0) | round(2) }}</p>
-                <p>Rendimento Total ao fim do prazo: ${{ rendimento_total | default(0) | round(2) }} / R$ {{ rendimento_total_reais | default(0) | round(2) }}</p>
-                <p>Número de reinvestimentos necessários para atingir o objetivo: {{ reinvestimentos | default(0) }}</p>
-                <p>Valor Acumulado ao final: ${{ rendimento_total | default(0) | round(2) }}</p>
-                <p>Objetivo desejado de retorno: ${{ objetivo_retorno | default(0) | round(2) }}</p>
-                <p>Prazo escolhido: {{ prazo_tipo | capitalize }}</p>
-                <p>Taxa de câmbio utilizada: R$ {{ taxa_cambio | default(0) | round(2) }}</p>
-                <p>Total de dias para alcançar o objetivo: {{ total_dias }} dias (aproximadamente {{ total_meses }} meses e {{ dias_restantes }} dias)</p>
-                <p>{{ aviso_variacao }}</p>
-            </div>
-            {% elif error %}
-            <div class="error">{{ error }}</div>
-            {% endif %}
-        </div>
+        <div id="resultContainer"></div>
     </div>
 
     <script>
-        // Função para rolar para a div de resultados
-        function scrollToResults() {
-            const resultContainer = document.getElementById('resultContainer');
-            if (resultContainer) {
-                resultContainer.scrollIntoView({ behavior: 'smooth' });
-            }
-        }
+        document.getElementById('investmentForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Impede o envio do formulário
 
-        // Chame a função de rolagem após o carregamento da página
-        window.onload = function() {
-            // Verifica se há resultados a serem exibidos
-            {% if resultado %}
-                scrollToResults();
-            {% endif %}
-        };
+            // Obtendo os valores do formulário
+            const investimentoInicial = parseFloat(document.getElementById('investimento_inicial').value);
+            const taxaLucro = parseFloat(document.getElementById('taxa_lucro').value) / 100;
+            const prazoTipo = document.getElementById('prazo_tipo').value;
+            const objetivoRetorno = parseFloat(document.getElementById('objetivo_retorno').value);
+            const taxaCambio = parseFloat(document.getElementById('taxa_cambio').value);
+            const aporteMensal = parseFloat(document.getElementById('aporte_mensal').value);
+
+            // Definindo o número de dias conforme o tipo de prazo
+            const diasPorPrazo = prazoTipo === 'quinzenal' ? 15 : 30;
+            let rendimentoTotal = investimentoInicial;
+            let reinvestimentos = 0;
+            let totalDias = 0;
+
+            // Calculando o rendimento total e o número de reinvestimentos
+            while (rendimentoTotal < objetivoRetorno) {
+                rendimentoTotal += rendimentoTotal * taxaLucro;
+                reinvestimentos++;
+                totalDias += diasPorPrazo;
+                rendimentoTotal += aporteMensal; // Adicionando aporte mensal
+            }
+
+            // Convertendo rendimento total para reais
+            const rendimentoTotalReais = rendimentoTotal * taxaCambio;
+
+            // Mostrando os resultados
+            const resultContainer = document.getElementById('resultContainer');
+            resultContainer.innerHTML = `
+                <div class="result">
+                    <h2>Resultados</h2>
+                    <p>Investimento Inicial: $${investimentoInicial.toFixed(2)}</p>
+                    <p>Rendimento Total ao fim do prazo: $${rendimentoTotal.toFixed(2)} / R$ ${rendimentoTotalReais.toFixed(2)}</p>
+                    <p>Número de reinvestimentos necessários para atingir o objetivo: ${reinvestimentos}</p>
+                    <p>Valor Acumulado ao final: $${rendimentoTotal.toFixed(2)}</p>
+                    <p>Objetivo desejado de retorno: $${objetivoRetorno.toFixed(2)}</p>
+                    <p>Prazo escolhido: ${prazoTipo.charAt(0).toUpperCase() + prazoTipo.slice(1)}</p>
+                    <p>Taxa de câmbio utilizada: R$ ${taxaCambio.toFixed(2)}</p>
+                    <p>Total de dias para alcançar o objetivo: ${totalDias} dias</p>
+                </div>
+            `;
+        });
     </script>
 </body>
 </html>
-
