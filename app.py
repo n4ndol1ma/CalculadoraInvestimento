@@ -46,8 +46,8 @@ def index():
             aportes_mensais = float(request.form.get("aportes_mensais", 0))  # Captura aportes mensais, padrão 0
 
             # Validação de entradas
-            if investimento_inicial <= 0 or taxa_lucro < 0 or objetivo_retorno <= 0 or taxa_cambio <= 0:
-                raise ValueError("Os valores de investimento, taxa de lucro, objetivo de retorno e taxa de câmbio devem ser positivos.")
+            if investimento_inicial <= 0 or taxa_lucro < 0 or taxa_lucro > 100 or objetivo_retorno <= 0 or taxa_cambio <= 0:
+                raise ValueError("Os valores de investimento, taxa de lucro (máximo 100%), objetivo de retorno e taxa de câmbio devem ser positivos.")
 
             # Definindo prazo em dias
             prazo_dias = 15 if prazo_tipo == "quinzenal" else 30 if prazo_tipo == "mensal" else None
@@ -80,5 +80,6 @@ def index():
 
     return render_template("index.html", taxa_cambio=None, doacao_link=os.getenv("DOACAO_LINK"))
 
-# Nota: Removida a linha abaixo para produção
-# app.run()
+# Nota: Para desenvolvimento, utilize debug=True
+if __name__ == "__main__":
+    app.run(debug=True)  
