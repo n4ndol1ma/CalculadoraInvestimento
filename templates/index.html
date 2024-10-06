@@ -132,7 +132,7 @@
             <p>Investimento Inicial: ${{ investimento_inicial | default(0) | round(2) }}</p>
             <p>Rendimento Total ao fim do prazo: ${{ rendimento_total | default(0) | round(2) }} / R$ {{ rendimento_total_reais | default(0) | round(2) }}</p>
             <p>Número de reinvestimentos necessários para atingir o objetivo: {{ reinvestimentos | default(0) }}</p>
-            <p>Valor Acumulado ao final: ${{ valor_acumulado | default(0) | round(2) }}</p>
+            <p>Valor Acumulado ao final: ${{ rendimento_total | default(0) | round(2) }}</p>
             <p>Objetivo desejado de retorno: ${{ objetivo_retorno | default(0) | round(2) }}</p>
             <p>Prazo escolhido: {{ prazo_tipo | capitalize }}</p>
             <p>Taxa de câmbio utilizada: R$ {{ taxa_cambio | default(0) | round(2) }}</p>
@@ -145,6 +145,5 @@
     </div>
 </body>
 </html>
-
 
 
