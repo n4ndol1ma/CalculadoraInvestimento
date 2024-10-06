@@ -1,30 +1,42 @@
+:root {
+    --primary-color: #007bff;
+    --primary-dark: #0056b3;
+    --secondary-color: #8A05BE;
+    --secondary-dark: #6A029B;
+    --error-color: #f5c6cb;
+    --success-color: #2196F3;
+    --background-color: #f4f4f9;
+    --text-color: #333;
+    --label-color: #555;
+}
+
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Fonte mais moderna */
-    background-color: #f4f4f9; /* Cor de fundo suave */
-    color: #333;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+    background-color: var(--background-color); 
+    color: var(--text-color);
     margin: 0;
     padding: 0;
 }
 
 .container {
-    max-width: 600px; /* Largura máxima do container */
-    margin: 50px auto; /* Centraliza na página */
+    max-width: 600px; 
+    margin: 50px auto; 
     padding: 20px;
-    background-color: #ffffff; /* Fundo branco */
-    border-radius: 12px; /* Bordas arredondadas */
-    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1); /* Sombra mais suave */
-    transition: transform 0.3s; /* Transição ao passar o mouse */
+    background-color: #ffffff; 
+    border-radius: 12px; 
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1); 
+    transition: transform 0.3s; 
 }
 
 .container:hover {
-    transform: translateY(-2px); /* Efeito de elevação */
+    transform: translateY(-2px); 
 }
 
 h1 {
     text-align: center;
-    color: #007bff; /* Azul moderno */
-    font-size: 28px; /* Tamanho da fonte */
-    margin-bottom: 20px; /* Espaçamento inferior */
+    color: var(--primary-color); 
+    font-size: 28px; 
+    margin-bottom: 20px; 
 }
 
 form {
@@ -33,97 +45,97 @@ form {
 }
 
 label {
-    margin: 10px 0 5px; /* Espaçamento superior e inferior */
-    font-weight: bold; /* Negrito */
-    color: #555; /* Cor do texto do rótulo */
+    margin: 10px 0 5px; 
+    font-weight: bold; 
+    color: var(--label-color); 
 }
 
 input, select {
-    padding: 12px; /* Preenchimento aumentado para mais conforto */
+    padding: 12px; 
     font-size: 16px;
-    margin-bottom: 15px; /* Espaçamento inferior */
-    border: 1px solid #ccc; /* Borda suave */
-    border-radius: 6px; /* Bordas arredondadas */
-    transition: border-color 0.3s; /* Transição para a cor da borda */
+    margin-bottom: 15px; 
+    border: 1px solid #ccc; 
+    border-radius: 6px; 
+    transition: border-color 0.3s; 
 }
 
 input:focus, select:focus {
-    border-color: #007bff; /* Cor da borda em foco */
-    outline: none; /* Remove contorno padrão */
+    border-color: var(--primary-color); 
+    outline: none; 
 }
 
 button {
-    padding: 12px; /* Preenchimento aumentado */
+    padding: 12px; 
     font-size: 16px;
-    background-color: #007bff; /* Cor do botão */
-    color: white; /* Cor do texto */
-    border: none; /* Sem borda */
-    border-radius: 6px; /* Bordas arredondadas */
-    cursor: pointer; /* Mão ao passar o mouse */
-    transition: background-color 0.3s ease, transform 0.2s; /* Transição suave */
+    background-color: var(--primary-color); 
+    color: white; 
+    border: none; 
+    border-radius: 6px; 
+    cursor: pointer; 
+    transition: background-color 0.3s ease, transform 0.2s; 
 }
 
 button:hover {
-    background-color: #0056b3; /* Cor ao passar o mouse */
-    transform: translateY(-1px); /* Efeito de elevação ao passar o mouse */
+    background-color: var(--primary-dark); 
+    transform: translateY(-1px); 
 }
 
 .result, .error {
-    margin-top: 20px; /* Espaçamento superior */
-    padding: 15px; /* Preenchimento aumentado */
-    border-radius: 6px; /* Bordas arredondadas */
-    color: #333; /* Cor do texto */
+    margin-top: 20px; 
+    padding: 15px; 
+    border-radius: 6px; 
+    color: var(--text-color); 
 }
 
 .result {
-    background-color: #e7f3fe; /* Fundo claro para resultados */
-    border-left: 6px solid #2196F3; /* Borda esquerda azul */
+    background-color: #e7f3fe; 
+    border-left: 6px solid var(--success-color); 
 }
 
 .error {
-    background-color: #f8d7da; /* Fundo claro para erros */
-    border-left: 6px solid #f5c6cb; /* Borda esquerda vermelha */
+    background-color: #f8d7da; 
+    border-left: 6px solid var(--error-color); 
 }
 
 .doacao {
-    margin-top: 30px; /* Espaçamento superior aumentado */
-    text-align: center; /* Centraliza o texto */
+    margin-top: 30px; 
+    text-align: center; 
 }
 
 .doar-btn {
-    background-color: #8A05BE; /* Cor do botão de doação */
-    color: white; /* Cor do texto */
-    border: none; /* Sem borda */
-    padding: 10px 20px; /* Preenchimento do botão */
+    background-color: var(--secondary-color); 
+    color: white; 
+    border: none; 
+    padding: 10px 20px; 
     font-size: 16px;
-    cursor: pointer; /* Mão ao passar o mouse */
-    border-radius: 6px; /* Bordas arredondadas */
-    transition: background-color 0.3s ease, transform 0.2s; /* Transição suave */
+    cursor: pointer; 
+    border-radius: 6px; 
+    transition: background-color 0.3s ease, transform 0.2s; 
 }
 
 .doar-btn:hover {
-    background-color: #6A029B; /* Cor ao passar o mouse */
-    transform: translateY(-1px); /* Efeito de elevação ao passar o mouse */
+    background-color: var(--secondary-dark); 
+    transform: translateY(-1px); 
 }
 
 /* Responsividade */
 @media (max-width: 600px) {
     .container {
-        margin: 20px; /* Margem reduzida em telas pequenas */
-        padding: 15px; /* Preenchimento reduzido */
+        margin: 20px; 
+        padding: 15px; 
     }
 
     h1 {
-        font-size: 24px; /* Tamanho da fonte reduzido */
+        font-size: 24px; 
     }
 
     input, select, button {
-        font-size: 14px; /* Tamanho da fonte reduzido */
+        font-size: 14px; 
     }
 
     .doar-btn {
-        padding: 8px 16px; /* Preenchimento reduzido */
-        font-size: 14px; /* Tamanho da fonte reduzido */
+        padding: 8px 16px; 
+        font-size: 14px; 
     }
 }
 
