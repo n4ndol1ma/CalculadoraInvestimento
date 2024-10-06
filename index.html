@@ -148,13 +148,13 @@
             const diasPorPrazo = prazoTipo === 'quinzenal' ? 15 : 30;
             let rendimentoTotal = investimentoInicial;
             let reinvestimentos = 0;
-            let totalDias = 0;
+            let totalMeses = 0; // Mudar totalDias para totalMeses
 
             // Calculando o rendimento total e o número de reinvestimentos
             while (rendimentoTotal < objetivoRetorno) {
                 rendimentoTotal += rendimentoTotal * taxaLucro;
                 reinvestimentos++;
-                totalDias += diasPorPrazo;
+                totalMeses += (prazoTipo === 'quinzenal' ? 0.5 : 1); // Incrementa 0.5 para quinzenal e 1 para mensal
                 rendimentoTotal += aporteMensal; // Adicionando aporte mensal
             }
 
@@ -173,12 +173,9 @@
                     <p>Objetivo desejado de retorno: $${objetivoRetorno.toFixed(2)}</p>
                     <p>Prazo escolhido: ${prazoTipo.charAt(0).toUpperCase() + prazoTipo.slice(1)}</p>
                     <p>Taxa de câmbio utilizada: R$ ${taxaCambio.toFixed(2)}</p>
-                    <p>Total de dias para alcançar o objetivo: ${totalDias} dias</p>
+                    <p>Total de meses para alcançar o objetivo: ${Math.ceil(totalMeses)} meses</p> <!-- Mudou de dias para meses -->
                 </div>
             `;
-
-            // Rola a página para o resultado
-            resultContainer.scrollIntoView({ behavior: 'smooth' });
         });
     </script>
 </body>
