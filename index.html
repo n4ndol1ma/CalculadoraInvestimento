@@ -5,114 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculadora de Investimento</title>
     <link rel="stylesheet" href="style.css"> <!-- Certifique-se de que o style.css está na mesma pasta -->
-    <style>
-        /* Estilo base para o container */
-        body {
-            font-family: 'Roboto', sans-serif;
-            background-color: #121212; /* Cor de fundo escura */
-            color: #e0e0e0; /* Texto claro para contraste */
-            margin: 0;
-            padding: 0;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #1f1f1f; /* Fundo do container mais escuro */
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
-            border-radius: 8px;
-        }
-
-        h1 {
-            text-align: center;
-            color: #e0e0e0; /* Cor de texto clara */
-            margin-bottom: 20px;
-        }
-
-        form {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        label {
-            font-weight: bold;
-            color: #b0b0b0; /* Texto sutilmente mais claro */
-        }
-
-        input, select, button {
-            padding: 10px;
-            border: 1px solid #333;
-            border-radius: 4px;
-            font-size: 16px;
-            background-color: #2c2c2c; /* Input escuro */
-            color: #e0e0e0; /* Texto claro */
-        }
-
-        input::placeholder {
-            color: #888;
-        }
-
-        button {
-            background-color: #28a745; /* Botão de destaque verde */
-            color: white;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            border: none;
-        }
-
-        button:hover {
-            background-color: #218838; /* Cor mais escura no hover */
-        }
-
-        .doacao, .compartilhar {
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        .result {
-            margin-top: 20px;
-            background-color: #2b2b2b; /* Fundo dos resultados mais escuro */
-            padding: 15px;
-            border-radius: 4px;
-            color: #f1f1f1; /* Cor de texto clara */
-        }
-
-        .error {
-            color: red;
-            text-align: center;
-        }
-
-        /* Estilos responsivos */
-        @media (max-width: 600px) {
-            .container {
-                padding: 10px;
-            }
-
-            button {
-                font-size: 14px;
-            }
-
-            input, select {
-                font-size: 14px;
-            }
-
-            h1 {
-                font-size: 24px;
-            }
-        }
-    </style>
 </head>
 <body>
     <div class="container">
         <h1>Calculadora de Investimento</h1>
         <form id="investmentForm">
             <label for="investimento_inicial">Investimento inicial (em dólares):</label>
-            <input type="number" step="0.01" id="investimento_inicial" required>
+            <input type="number" step="0.01" id="investimento_inicial" placeholder="Ex: 1000" required>
 
             <label for="taxa_lucro">Taxa de lucro ao fim do prazo (%):</label>
-            <input type="number" step="0.01" id="taxa_lucro" required>
+            <input type="number" step="0.01" id="taxa_lucro" placeholder="Ex: 5" required>
 
             <label for="prazo_tipo">Escolha o prazo:</label>
             <select id="prazo_tipo">
@@ -121,18 +23,17 @@
             </select>
 
             <label for="objetivo_retorno">Objetivo de retorno (em dólares):</label>
-            <input type="number" step="0.01" id="objetivo_retorno" required>
+            <input type="number" step="0.01" id="objetivo_retorno" placeholder="Ex: 2000" required>
 
             <label for="taxa_cambio">Taxa de câmbio (USD/BRL):</label>
-            <input type="number" step="0.01" id="taxa_cambio" required>
+            <input type="number" step="0.01" id="taxa_cambio" placeholder="Ex: 5.25" required>
 
             <label for="aporte_mensal">Aportes Mensais (em dólares):</label>
-            <input type="number" step="0.01" id="aporte_mensal" placeholder="Insira o valor dos aportes" required>
+            <input type="number" step="0.01" id="aporte_mensal" placeholder="Ex: 100" required>
 
             <button type="submit">Calcular</button>
         </form>
 
-        <!-- Adicionar o botão de doação -->
         <div class="doacao">
             <p>Gostou da calculadora? Considere fazer uma doação!</p>
             <a href="https://nubank.com.br/cobrar/8h0y9o/67016df4-25df-4e29-b894-6b36320ba169" target="_blank">
@@ -140,7 +41,6 @@
             </a>
         </div>
 
-        <!-- Botão para compartilhar -->
         <div class="compartilhar">
             <p>Ajude a divulgar esta calculadora:</p>
             <button id="compartilharBtn">Compartilhar</button>
@@ -161,13 +61,11 @@
             const taxaCambio = parseFloat(document.getElementById('taxa_cambio').value);
             const aporteMensal = parseFloat(document.getElementById('aporte_mensal').value);
 
-            // Definindo o número de dias conforme o tipo de prazo
             const diasPorPrazo = prazoTipo === 'quinzenal' ? 15 : 30;
             let rendimentoTotal = investimentoInicial;
             let reinvestimentos = 0;
             let totalMeses = 0;
 
-            // Calculando o rendimento total e o número de reinvestimentos
             while (rendimentoTotal < objetivoRetorno) {
                 rendimentoTotal += rendimentoTotal * taxaLucro;
                 reinvestimentos++;
@@ -175,27 +73,23 @@
                 rendimentoTotal += aporteMensal;
             }
 
-            // Convertendo rendimento total para reais
             const rendimentoTotalReais = rendimentoTotal * taxaCambio;
 
-            // Mostrando os resultados
             const resultContainer = document.getElementById('resultContainer');
             resultContainer.innerHTML = `
                 <div class="result">
                     <h2>Resultados</h2>
                     <p>Investimento Inicial: $${investimentoInicial.toFixed(2)}</p>
                     <p>Rendimento Total ao fim do prazo: $${rendimentoTotal.toFixed(2)} / R$ ${rendimentoTotalReais.toFixed(2)}</p>
-                    <p>Número de reinvestimentos necessários para atingir o objetivo: ${reinvestimentos}</p>
-                    <p>Valor Acumulado ao final: $${rendimentoTotal.toFixed(2)}</p>
-                    <p>Objetivo desejado de retorno: $${objetivoRetorno.toFixed(2)}</p>
+                    <p>Número de reinvestimentos necessários: ${reinvestimentos}</p>
+                    <p>Objetivo desejado: $${objetivoRetorno.toFixed(2)}</p>
                     <p>Prazo escolhido: ${prazoTipo.charAt(0).toUpperCase() + prazoTipo.slice(1)}</p>
-                    <p>Taxa de câmbio utilizada: R$ ${taxaCambio.toFixed(2)}</p>
-                    <p>Total de meses para alcançar o objetivo: ${Math.ceil(totalMeses)} meses</p>
+                    <p>Taxa de câmbio: R$ ${taxaCambio.toFixed(2)}</p>
+                    <p>Total de meses para o objetivo: ${Math.ceil(totalMeses)} meses</p>
                 </div>
             `;
         });
 
-        // Função para compartilhar usando a Web Share API
         document.getElementById('compartilharBtn').addEventListener('click', function() {
             if (navigator.share) {
                 navigator.share({
@@ -206,10 +100,11 @@
                 .then(() => console.log('Compartilhamento bem-sucedido!'))
                 .catch((error) => console.log('Erro ao compartilhar:', error));
             } else {
-                alert('A API de compartilhamento não é suportada neste navegador.');
+                alert('API de compartilhamento não suportada neste navegador.');
             }
         });
     </script>
 </body>
 </html>
+
 
