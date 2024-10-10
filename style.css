@@ -10,17 +10,19 @@
     --error-color: #f44336;
     --success-color: #34a853;
     --border-color: #333333;
-}
-
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    --font-primary: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    --font-secondary: 'Roboto', sans-serif;
+  }
+  
+  body {
+    font-family: var(--font-primary);
     background-color: var(--background-color);
     color: var(--text-color);
     margin: 0;
     padding: 0;
-}
-
-.container {
+  }
+  
+  .container {
     max-width: 600px;
     margin: 50px auto;
     padding: 20px;
@@ -28,31 +30,33 @@ body {
     border-radius: 12px;
     box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.6);
     transition: transform 0.3s;
-}
-
-.container:hover {
+  }
+  
+  .container:hover {
     transform: translateY(-2px);
-}
-
-h1 {
+  }
+  
+  h1 {
     text-align: center;
     color: var(--primary-color);
     font-size: 28px;
     margin-bottom: 20px;
-}
-
-form {
+    font-family: var(--font-secondary);
+  }
+  
+  form {
     display: flex;
     flex-direction: column;
-}
-
-label {
+  }
+  
+  label {
     margin: 10px 0 5px;
     font-weight: bold;
     color: var(--label-color);
-}
-
-input, select {
+    font-family: var(--font-primary);
+  }
+  
+  input, select {
     padding: 12px;
     font-size: 16px;
     margin-bottom: 15px;
@@ -61,14 +65,15 @@ input, select {
     border: 1px solid var(--border-color);
     border-radius: 6px;
     transition: border-color 0.3s ease;
-}
-
-input:focus, select:focus {
+    font-family: var(--font-primary);
+  }
+  
+  input:focus, select:focus {
     border-color: var(--primary-color);
     outline: none;
-}
-
-button {
+  }
+  
+  button {
     padding: 12px;
     font-size: 16px;
     background-color: var(--primary-color);
@@ -77,44 +82,54 @@ button {
     border-radius: 6px;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s;
-}
-
-button:hover {
+    font-family: var(--font-primary);
+  }
+  
+  button:hover {
     background-color: var(--primary-dark);
     transform: translateY(-1px);
-}
-
-.result, .error {
+  }
+  
+  .result, .error {
     margin-top: 20px;
     padding: 15px;
     border-radius: 6px;
     color: var(--text-color);
-}
-
-.result {
+    font-family: var(--font-primary);
+  }
+  
+  .result {
     background-color: #1b5e20;
     border-left: 5px solid var(--success-color);
-}
-
-.error {
+  }
+  
+  .error {
     background-color: #b71c1c;
     border-left: 5px solid var(--error-color);
-}
-
-.doacao, .compartilhar {
+  }
+  
+  .doacao, .compartilhar {
     text-align: center;
     margin-top: 20px;
-}
-
-.doacao p, .compartilhar p {
+  }
+  
+  .doacao p, .compartilhar p {
     margin-bottom: 10px;
     color: var(--label-color);
-}
-
-.doar-btn {
+    font-family: var(--font-primary);
+  }
+  
+  .doar-btn {
     background-color: var(--secondary-color);
-}
-
-.doar-btn:hover {
+    font-family: var(--font-primary);
+  }
+  
+  .doar-btn:hover {
     background-color: var(--secondary-dark);
-}
+  }
+  
+  @media screen and (max-width: 768px) {
+    .container {
+      padding: 15px;
+    }
+  }
