@@ -4,109 +4,79 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculadora de Investimentos</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            padding: 20px;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        h2 {
-            text-align: center;
-        }
-        label {
-            display: block;
-            margin: 10px 0 5px;
-        }
-        input, select {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 15px;
-            box-sizing: border-box;
-        }
-        button {
-            width: 100%;
-            padding: 10px;
-            background-color: #28a745;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #218838;
-        }
-        .calculo_campos {
-            display: none;
-        }
-        .result {
-            background-color: #f8f9fa;
-            padding: 15px;
-            margin-top: 20px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h2>Calculadora de Investimentos</h2>
+    <div class="container">
+        <h1>Calculadora de Investimentos</h1>
 
-    <form id="calculationForm">
-        <!-- Menu para selecionar o tipo de cálculo -->
-        <label for="tipo_calculo">Escolha o tipo de cálculo:</label>
-        <select id="tipo_calculo">
-            <option value="juros_compostos">Juros Compostos</option>
-            <option value="depositos_regulares">Depósitos Regulares</option>
-            <option value="comparacao_taxas">Comparação de Taxas de Lucro</option>
-            <option value="calculo_impostos">Cálculo de Impostos</option>
-        </select>
+        <form id="calculationForm">
+            <!-- Menu para selecionar o tipo de cálculo -->
+            <label for="tipo_calculo">Escolha o tipo de cálculo:</label>
+            <select id="tipo_calculo">
+                <option value="juros_compostos">Juros Compostos</option>
+                <option value="depositos_regulares">Depósitos Regulares</option>
+                <option value="comparacao_taxas">Comparação de Taxas de Lucro</option>
+                <option value="calculo_impostos">Cálculo de Impostos</option>
+            </select>
 
-        <!-- Campos comuns -->
-        <div id="campos_comuns">
-            <label for="investimento_inicial">Investimento Inicial ($):</label>
-            <input type="number" step="0.01" id="investimento_inicial" required>
+            <!-- Campos comuns -->
+            <div id="campos_comuns">
+                <label for="investimento_inicial">Investimento Inicial ($):</label>
+                <input type="number" step="0.01" id="investimento_inicial" required>
 
-            <label for="taxa_lucro">Taxa de Lucro (%):</label>
-            <input type="number" step="0.01" id="taxa_lucro" required>
+                <label for="taxa_lucro">Taxa de Lucro (%):</label>
+                <input type="number" step="0.01" id="taxa_lucro" required>
 
-            <label for="objetivo_retorno">Objetivo de Retorno ($):</label>
-            <input type="number" step="0.01" id="objetivo_retorno" required>
+                <label for="objetivo_retorno">Objetivo de Retorno ($):</label>
+                <input type="number" step="0.01" id="objetivo_retorno" required>
+            </div>
+
+            <!-- Campos específicos -->
+            <div id="juros_compostos_campos" class="calculo_campos">
+                <label for="taxa_cambio">Taxa de Câmbio:</label>
+                <input type="number" step="0.01" id="taxa_cambio">
+            </div>
+
+            <div id="depositos_regulares_campos" class="calculo_campos">
+                <label for="aporte_mensal">Aporte Mensal ($):</label>
+                <input type="number" step="0.01" id="aporte_mensal">
+            </div>
+
+            <div id="comparacao_taxas_campos" class="calculo_campos">
+                <label for="taxa_comparacao1">Taxa de Lucro 1 (%):</label>
+                <input type="number" step="0.01" id="taxa_comparacao1">
+                <label for="taxa_comparacao2">Taxa de Lucro 2 (%):</label>
+                <input type="number" step="0.01" id="taxa_comparacao2">
+            </div>
+
+            <div id="calculo_impostos_campos" class="calculo_campos">
+                <label for="taxa_imposto">Taxa de Imposto (%):</label>
+                <input type="number" step="0.01" id="taxa_imposto">
+            </div>
+
+            <button type="submit">Calcular</button>
+        </form>
+
+        <!-- Resultados -->
+        <div id="resultContainer"></div>
+
+        <!-- Botão de doação e compartilhamento -->
+        <div class="doacao">
+            <p>Apoie nosso projeto!</p>
+            <button class="doar-btn">Doar</button>
         </div>
 
-        <!-- Campos específicos para Juros Compostos -->
-        <div id="juros_compostos_campos" class="calculo_campos">
-            <label for="taxa_cambio">Taxa de Câmbio:</label>
-            <input type="number" step="0.01" id="taxa_cambio">
+        <div class="compartilhar">
+            <p>Compartilhe com seus amigos!</p>
+            <button class="doar-btn">Compartilhar</button>
         </div>
+    </div>
 
-        <!-- Campos para Depósitos Regulares -->
-        <div id="depositos_regulares_campos" class="calculo_campos">
-            <label for="aporte_mensal">Aporte Mensal ($):</label>
-            <input type="number" step="0.01" id="aporte_mensal">
-        </div>
-
-        <!-- Campos para Comparação de Taxas -->
-        <div id="comparacao_taxas_campos" class="calculo_campos">
-            <label for="taxa_comparacao1">Taxa de Lucro 1 (%):</label>
-            <input type="number" step="0.01" id="taxa_comparacao1">
-            <label for="taxa_comparacao2">Taxa de Lucro 2 (%):</label>
-            <input type="number" step="0.01" id="taxa_comparacao2">
-        </div>
-
-        <!-- Campos para Cálculo de Impostos -->
-        <div id="calculo_impostos_campos" class="calculo_campos">
-            <label for="taxa_imposto">Taxa de Imposto (%):</label>
-            <input type="number" step="0.01" id="taxa_imposto">
-        </div>
-
-        <button type="submit">Calcular</button>
-    </form>
-
-    <!-- Resultados -->
-    <div id="resultContainer"></div>
-
-    <script src="script.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>
+
 
 
 
