@@ -48,7 +48,7 @@ h1 {
 form {
     display: flex;
     flex-direction: column;
-    gap: 15px; /* Adicionando espaçamento entre os campos */
+    gap: 15px;
 }
 
 label {
@@ -71,7 +71,7 @@ input, select {
     border-radius: 6px;
     transition: border-color 0.3s ease;
     box-sizing: border-box;
-    width: 100%; /* Garantir que os campos ocupem a largura completa */
+    width: 100%;
 }
 
 input:focus, select:focus {
@@ -115,43 +115,8 @@ button:hover {
 }
 
 .doacao, .compartilhar {
-    text-align: center;
+    display: flex;
+    justify-content: space-between;
     margin-top: 20px;
+    gap: 15px;
 }
-
-.doacao p, .compartilhar p {
-    margin-bottom: 10px;
-    color: var(--label-color);
-}
-
-.doar-btn {
-    background-color: var(--secondary-color);
-    padding: 12px;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s;
-}
-
-.doar-btn:hover {
-    background-color: var(--secondary-dark);
-    transform: translateY(-1px);
-}
-
-@media (max-width: 768px) {
-    .container {
-        padding: 15px;
-        margin: 20px auto;
-    }
-
-    h1 {
-        font-size: 24px;
-    }
-
-    input, select, button {
-        font-size: 14px;
-        padding: 10px;
-    }
-}
-
