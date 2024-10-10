@@ -1,110 +1,57 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora de Investimento</title>
-    <link rel="stylesheet" href="style.css"> <!-- Certifique-se de que o style.css está na mesma pasta -->
-</head>
-<body>
-    <div class="container">
-        <h1>Calculadora de Investimento</h1>
-        <form id="investmentForm">
-            <label for="investimento_inicial">Investimento inicial (em dólares):</label>
-            <input type="number" step="0.01" id="investimento_inicial" placeholder="Ex: 1000" required>
+<form id="calculationForm">
+    <!-- Menu para selecionar o tipo de cálculo -->
+    <label for="tipo_calculo">Escolha o tipo de cálculo:</label>
+    <select id="tipo_calculo">
+        <option value="juros_compostos">Juros Compostos</option>
+        <option value="depositos_regulares">Depósitos Regulares</option>
+        <option value="comparacao_taxas">Comparação de Taxas de Lucro</option>
+        <option value="crescimento_mensal">Tabela de Crescimento Mensal</option>
+        <option value="calculo_impostos">Cálculo de Impostos</option>
+    </select>
 
-            <label for="taxa_lucro">Taxa de lucro ao fim do prazo (%):</label>
-            <input type="number" step="0.01" id="taxa_lucro" placeholder="Ex: 5" required>
+    <!-- Campos comuns -->
+    <div id="campos_comuns">
+        <label for="investimento_inicial">Investimento Inicial ($):</label>
+        <input type="number" step="0.01" id="investimento_inicial" required>
 
-            <label for="prazo_tipo">Escolha o prazo:</label>
-            <select id="prazo_tipo">
-                <option value="quinzenal">Quinzenal (15 dias)</option>
-                <option value="mensal">Mensal (30 dias)</option>
-            </select>
+        <label for="taxa_lucro">Taxa de Lucro (%):</label>
+        <input type="number" step="0.01" id="taxa_lucro" required>
 
-            <label for="objetivo_retorno">Objetivo de retorno (em dólares):</label>
-            <input type="number" step="0.01" id="objetivo_retorno" placeholder="Ex: 2000" required>
-
-            <label for="taxa_cambio">Taxa de câmbio (USD/BRL):</label>
-            <input type="number" step="0.01" id="taxa_cambio" placeholder="Ex: 5.25" required>
-
-            <label for="aporte_mensal">Aportes Mensais (em dólares):</label>
-            <input type="number" step="0.01" id="aporte_mensal" placeholder="Ex: 100" required>
-
-            <button type="submit">Calcular</button>
-        </form>
-
-        <div class="doacao">
-            <p>Gostou da calculadora? Considere fazer uma doação!</p>
-            <a href="https://nubank.com.br/cobrar/8h0y9o/67016df4-25df-4e29-b894-6b36320ba169" target="_blank">
-                <button class="doar-btn">Fazer Doação</button>
-            </a>
-        </div>
-
-        <div class="compartilhar">
-            <p>Ajude a divulgar esta calculadora:</p>
-            <button id="compartilharBtn">Compartilhar</button>
-        </div>
-
-        <div id="resultContainer"></div>
+        <label for="objetivo_retorno">Objetivo de Retorno ($):</label>
+        <input type="number" step="0.01" id="objetivo_retorno" required>
     </div>
 
-    <script>
-        document.getElementById('investmentForm').addEventListener('submit', function(event) {
-            event.preventDefault(); // Impede o envio do formulário
+    <!-- Campos específicos para Juros Compostos -->
+    <div id="juros_compostos_campos" class="calculo_campos" style="display: none;">
+        <label for="taxa_cambio">Taxa de Câmbio:</label>
+        <input type="number" step="0.01" id="taxa_cambio">
+    </div>
 
-            // Obtendo os valores do formulário
-            const investimentoInicial = parseFloat(document.getElementById('investimento_inicial').value);
-            const taxaLucro = parseFloat(document.getElementById('taxa_lucro').value) / 100;
-            const prazoTipo = document.getElementById('prazo_tipo').value;
-            const objetivoRetorno = parseFloat(document.getElementById('objetivo_retorno').value);
-            const taxaCambio = parseFloat(document.getElementById('taxa_cambio').value);
-            const aporteMensal = parseFloat(document.getElementById('aporte_mensal').value);
+    <!-- Campos para Depósitos Regulares -->
+    <div id="depositos_regulares_campos" class="calculo_campos" style="display: none;">
+        <label for="aporte_mensal">Aporte Mensal ($):</label>
+        <input type="number" step="0.01" id="aporte_mensal">
+    </div>
 
-            const diasPorPrazo = prazoTipo === 'quinzenal' ? 15 : 30;
-            let rendimentoTotal = investimentoInicial;
-            let reinvestimentos = 0;
-            let totalMeses = 0;
+    <!-- Campos para Comparação de Taxas -->
+    <div id="comparacao_taxas_campos" class="calculo_campos" style="display: none;">
+        <label for="taxa_comparacao1">Taxa de Lucro 1 (%):</label>
+        <input type="number" step="0.01" id="taxa_comparacao1">
+        <label for="taxa_comparacao2">Taxa de Lucro 2 (%):</label>
+        <input type="number" step="0.01" id="taxa_comparacao2">
+    </div>
 
-            while (rendimentoTotal < objetivoRetorno) {
-                rendimentoTotal += rendimentoTotal * taxaLucro;
-                reinvestimentos++;
-                totalMeses += (prazoTipo === 'quinzenal' ? 0.5 : 1);
-                rendimentoTotal += aporteMensal;
-            }
+    <!-- Campos para Cálculo de Impostos -->
+    <div id="calculo_impostos_campos" class="calculo_campos" style="display: none;">
+        <label for="taxa_imposto">Taxa de Imposto (%):</label>
+        <input type="number" step="0.01" id="taxa_imposto">
+    </div>
 
-            const rendimentoTotalReais = rendimentoTotal * taxaCambio;
+    <button type="submit">Calcular</button>
+</form>
 
-            const resultContainer = document.getElementById('resultContainer');
-            resultContainer.innerHTML = `
-                <div class="result">
-                    <h2>Resultados</h2>
-                    <p>Investimento Inicial: $${investimentoInicial.toFixed(2)}</p>
-                    <p>Rendimento Total ao fim do prazo: $${rendimentoTotal.toFixed(2)} / R$ ${rendimentoTotalReais.toFixed(2)}</p>
-                    <p>Número de reinvestimentos necessários: ${reinvestimentos}</p>
-                    <p>Objetivo desejado: $${objetivoRetorno.toFixed(2)}</p>
-                    <p>Prazo escolhido: ${prazoTipo.charAt(0).toUpperCase() + prazoTipo.slice(1)}</p>
-                    <p>Taxa de câmbio: R$ ${taxaCambio.toFixed(2)}</p>
-                    <p>Total de meses para o objetivo: ${Math.ceil(totalMeses)} meses</p>
-                </div>
-            `;
-        });
+<!-- Resultados -->
+<div id="resultContainer"></div>
 
-        document.getElementById('compartilharBtn').addEventListener('click', function() {
-            if (navigator.share) {
-                navigator.share({
-                    title: 'Calculadora de Investimento',
-                    text: 'Confira esta calculadora de investimento incrível!',
-                    url: window.location.href
-                })
-                .then(() => console.log('Compartilhamento bem-sucedido!'))
-                .catch((error) => console.log('Erro ao compartilhar:', error));
-            } else {
-                alert('API de compartilhamento não suportada neste navegador.');
-            }
-        });
-    </script>
-</body>
-</html>
 
 
