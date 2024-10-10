@@ -17,6 +17,7 @@
                 <option value="juros_compostos">Juros Compostos</option>
                 <option value="depositos_regulares">Depósitos Regulares</option>
                 <option value="comparacao_taxas">Comparação de Taxas de Lucro</option>
+                <option value="comparacao_fundos">Comparação de Fundos</option>
                 <option value="calculo_impostos">Cálculo de Impostos</option>
             </select>
 
@@ -30,6 +31,10 @@
 
                 <label for="objetivo_retorno">Objetivo de Retorno ($):</label>
                 <input type="number" step="0.01" id="objetivo_retorno" required>
+
+                <!-- Campo adicional para prazo de resgate -->
+                <label for="prazo_resgate">Prazo de Resgate (meses):</label>
+                <input type="number" id="prazo_resgate" required>
             </div>
 
             <!-- Campos específicos -->
@@ -48,6 +53,13 @@
                 <input type="number" step="0.01" id="taxa_comparacao1">
                 <label for="taxa_comparacao2">Taxa de Lucro 2 (%):</label>
                 <input type="number" step="0.01" id="taxa_comparacao2">
+            </div>
+
+            <div id="comparacao_fundos_campos" class="calculo_campos">
+                <label for="taxa_fundo1">Taxa do Fundo 1 (%):</label>
+                <input type="number" step="0.01" id="taxa_fundo1">
+                <label for="taxa_fundo2">Taxa do Fundo 2 (%):</label>
+                <input type="number" step="0.01" id="taxa_fundo2">
             </div>
 
             <div id="calculo_impostos_campos" class="calculo_campos">

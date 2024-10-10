@@ -16,6 +16,7 @@ document.getElementById('calculationForm').addEventListener('submit', function(e
     const investimentoInicial = parseFloat(document.getElementById('investimento_inicial').value);
     const taxaLucro = parseFloat(document.getElementById('taxa_lucro').value) / 100;
     const objetivoRetorno = parseFloat(document.getElementById('objetivo_retorno').value);
+    const prazoResgate = parseInt(document.getElementById('prazo_resgate').value);
 
     let rendimentoTotal = investimentoInicial;
     let totalMeses = 0;
@@ -25,7 +26,7 @@ document.getElementById('calculationForm').addEventListener('submit', function(e
         case 'juros_compostos':
             const taxaCambio = parseFloat(document.getElementById('taxa_cambio').value);
 
-            while (rendimentoTotal < objetivoRetorno) {
+            while (rendimentoTotal < objetivoRetorno && totalMeses < prazoResgate) {
                 rendimentoTotal += rendimentoTotal * taxaLucro;
                 totalMeses += 1;
             }
@@ -38,7 +39,7 @@ document.getElementById('calculationForm').addEventListener('submit', function(e
         case 'depositos_regulares':
             const aporteMensal = parseFloat(document.getElementById('aporte_mensal').value);
 
-            while (rendimentoTotal < objetivoRetorno) {
+            while (rendimentoTotal < objetivoRetorno && totalMeses < prazoResgate) {
                 rendimentoTotal += rendimentoTotal * taxaLucro;
                 rendimentoTotal += aporteMensal;
                 totalMeses += 1;
@@ -55,7 +56,7 @@ document.getElementById('calculationForm').addEventListener('submit', function(e
             let rendimentoTaxa1 = investimentoInicial;
             let rendimentoTaxa2 = investimentoInicial;
 
-            while (rendimentoTaxa1 < objetivoRetorno || rendimentoTaxa2 < objetivoRetorno) {
+            while ((rendimentoTaxa1 < objetivoRetorno || rendimentoTaxa2 < objetivoRetorno) && totalMeses < prazoResgate) {
                 if (rendimentoTaxa1 < objetivoRetorno) rendimentoTaxa1 += rendimentoTaxa1 * taxaComparacao1;
                 if (rendimentoTaxa2 < objetivoRetorno) rendimentoTaxa2 += rendimentoTaxa2 * taxaComparacao2;
                 totalMeses += 1;
@@ -66,26 +67,37 @@ document.getElementById('calculationForm').addEventListener('submit', function(e
                          Meses necessários: ${totalMeses}`;
             break;
 
-        case 'calculo_impostos':
-            const taxaImposto = parseFloat(document.getElementById('taxa_imposto').value) / 100;
+        case 'comparacao_fundos':
+            const taxaFundo1 = parseFloat(document.getElementById('taxa_fundo1').value) / 100;
+            const taxaFundo2 = parseFloat(document.getElementById('taxa_fundo2').value) / 100;
 
-            while (rendimentoTotal < objetivoRetorno) {
-                rendimentoTotal += rendimentoTotal * taxaLucro;
+            let rendimentoFundo1 = investimentoInicial;
+            let rendimentoFundo2 = investimentoInicial;
+
+            while (totalMeses < prazoResgate) {
+                rendimentoFundo1 += rendimentoFundo1 * taxaFundo1;
+                rendimentoFundo2 += rendimentoFundo2 * taxaFundo2;
                 totalMeses += 1;
             }
 
-            const rendimentoLiquido = rendimentoTotal - (rendimentoTotal * taxaImposto);
-            resultado = `Rendimento Bruto: $${rendimentoTotal.toFixed(2)}<br>
-                         Rendimento Líquido (após impostos): $${rendimentoLiquido.toFixed(2)}<br>
-                         Meses necessários: ${totalMeses}`;
+            resultado = `Rendimento Fundo 1: $${rendimentoFundo1.toFixed(2)}<br>
+                         Rendimento Fundo 2: $${rendimentoFundo2.toFixed(2)}<br>
+                         Período: ${totalMeses} meses`;
+            break;
+
+        case 'calculo_impostos':
+            const taxaImposto = parseFloat(document.getElementById('taxa_imposto').value) / 100;
+            const rendimentoAntesImposto = investimentoInicial + (investimentoInicial * taxaLucro * prazoResgate);
+            const rendimentoLiquido = rendimentoAntesImposto - (rendimentoAntesImposto * taxaImposto);
+
+            resultado = `Rendimento Bruto: $${rendimentoAntesImposto.toFixed(2)}<br>
+                         Rendimento Líquido: $${rendimentoLiquido.toFixed(2)}`;
             break;
 
         default:
-            resultado = 'Selecione um tipo de cálculo válido.';
-            break;
+            resultado = 'Opção inválida';
     }
 
-    // Exibir os resultados no container de resultado
-    document.getElementById('resultContainer').innerHTML = `<div class="result"><h2>Resultados</h2><p>${resultado}</p></div>`;
+    document.getElementById('resultContainer').innerHTML = resultado;
 });
 
