@@ -18,7 +18,6 @@ document.getElementById('calculationForm').addEventListener('submit', function(e
     const objetivoRetorno = parseFloat(document.getElementById('objetivo_retorno').value);
 
     let rendimentoTotal = investimentoInicial;
-    let reinvestimentos = 0;
     let totalMeses = 0;
     let resultado;
 
@@ -28,7 +27,6 @@ document.getElementById('calculationForm').addEventListener('submit', function(e
 
             while (rendimentoTotal < objetivoRetorno) {
                 rendimentoTotal += rendimentoTotal * taxaLucro;
-                reinvestimentos++;
                 totalMeses += 1;
             }
 
@@ -43,7 +41,6 @@ document.getElementById('calculationForm').addEventListener('submit', function(e
             while (rendimentoTotal < objetivoRetorno) {
                 rendimentoTotal += rendimentoTotal * taxaLucro;
                 rendimentoTotal += aporteMensal;
-                reinvestimentos++;
                 totalMeses += 1;
             }
 
@@ -74,7 +71,6 @@ document.getElementById('calculationForm').addEventListener('submit', function(e
 
             while (rendimentoTotal < objetivoRetorno) {
                 rendimentoTotal += rendimentoTotal * taxaLucro;
-                reinvestimentos++;
                 totalMeses += 1;
             }
 
@@ -92,3 +88,4 @@ document.getElementById('calculationForm').addEventListener('submit', function(e
     // Exibir os resultados no container de resultado
     document.getElementById('resultContainer').innerHTML = `<div class="result"><h2>Resultados</h2><p>${resultado}</p></div>`;
 });
+
