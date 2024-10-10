@@ -10,7 +10,6 @@
     --error-color: #f44336;
     --success-color: #34a853;
     --border-color: #333333;
-    --focus-color: #4caf50;
 }
 
 body {
@@ -19,7 +18,6 @@ body {
     color: var(--text-color);
     margin: 0;
     padding: 0;
-    line-height: 1.6;
 }
 
 .container {
@@ -29,12 +27,11 @@ body {
     background-color: var(--card-background-color);
     border-radius: 12px;
     box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.6);
-    transition: transform 0.3s, box-shadow 0.3s;
+    transition: transform 0.3s;
 }
 
 .container:hover {
     transform: translateY(-2px);
-    box-shadow: 0px 6px 24px rgba(0, 0, 0, 0.7);
 }
 
 h1 {
@@ -42,40 +39,32 @@ h1 {
     color: var(--primary-color);
     font-size: 28px;
     margin-bottom: 20px;
-    font-weight: bold;
 }
 
 form {
     display: flex;
     flex-direction: column;
-    gap: 15px;
 }
 
 label {
-    margin-bottom: 5px;
+    margin: 10px 0 5px;
     font-weight: bold;
     color: var(--label-color);
-}
-
-.input-group {
-    display: flex;
-    flex-direction: column;
 }
 
 input, select {
     padding: 12px;
     font-size: 16px;
+    margin-bottom: 15px;
     background-color: var(--background-color);
     color: var(--text-color);
     border: 1px solid var(--border-color);
     border-radius: 6px;
     transition: border-color 0.3s ease;
-    box-sizing: border-box;
-    width: 100%;
 }
 
 input:focus, select:focus {
-    border-color: var(--focus-color);
+    border-color: var(--primary-color);
     outline: none;
 }
 
@@ -100,8 +89,6 @@ button:hover {
     padding: 15px;
     border-radius: 6px;
     color: var(--text-color);
-    display: flex;
-    align-items: center;
 }
 
 .result {
@@ -115,8 +102,19 @@ button:hover {
 }
 
 .doacao, .compartilhar {
-    display: flex;
-    justify-content: space-between;
+    text-align: center;
     margin-top: 20px;
-    gap: 15px;
+}
+
+.doacao p, .compartilhar p {
+    margin-bottom: 10px;
+    color: var(--label-color);
+}
+
+.doar-btn {
+    background-color: var(--secondary-color);
+}
+
+.doar-btn:hover {
+    background-color: var(--secondary-dark);
 }
