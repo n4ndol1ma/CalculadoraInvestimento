@@ -6,7 +6,10 @@ document.getElementById('tipo_calculo').addEventListener('change', function() {
     todosCampos.forEach((campo) => campo.style.display = 'none');
 
     // Mostrar apenas os campos relevantes para o cálculo selecionado
-    document.getElementById(`${tipoCalculo}_campos`).style.display = 'block';
+    const camposEspecificos = document.getElementById(`${tipoCalculo}_campos`);
+    if (camposEspecificos) {
+        camposEspecificos.style.display = 'block';
+    }
 });
 
 document.getElementById('calculationForm').addEventListener('submit', function(event) {
@@ -24,7 +27,7 @@ document.getElementById('calculationForm').addEventListener('submit', function(e
 
     switch(tipoCalculo) {
         case 'juros_compostos':
-            const taxaCambio = parseFloat(document.getElementById('taxa_cambio').value);
+            const taxaCambio = parseFloat(document.getElementById('taxa_cambio').value) || 1;
 
             while (rendimentoTotal < objetivoRetorno && totalMeses < prazoResgate) {
                 rendimentoTotal += rendimentoTotal * taxaLucro;
@@ -100,4 +103,3 @@ document.getElementById('calculationForm').addEventListener('submit', function(e
 
     document.getElementById('resultContainer').innerHTML = resultado;
 });
-
