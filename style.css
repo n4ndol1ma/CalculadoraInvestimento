@@ -145,8 +145,37 @@ button:hover {
   transform: translateY(-2px);
 }
 
+/* Responsividade */
 @media screen and (max-width: 768px) {
   .container {
-      padding: 15px;
+    padding: 15px;
+  }
+
+  h1 {
+    font-size: 24px;
+  }
+
+  .donation-share {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .donation-share button {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  h1 {
+    font-size: 22px;
+  }
+
+  input, select, button {
+    font-size: 14px;
+  }
+
+  .donation-share button {
+    font-size: 14px;
+    padding: 10px 15px;
   }
 }

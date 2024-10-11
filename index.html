@@ -18,7 +18,7 @@
       <input type="number" step="0.01" id="annualInterestRate" placeholder="Taxa de lucro anual (%)" required>
 
       <label for="investmentTerm">Prazo:</label>
-      <select id="investmentTerm">
+      <select id="investmentTerm" required>
         <option value="15">Quinzenal (15 dias)</option>
         <option value="30" selected>Mensal (30 dias)</option>
       </select>
@@ -27,7 +27,7 @@
       <input type="number" step="0.01" id="targetAmount" placeholder="Objetivo de retorno (USD)" required>
 
       <label for="exchangeRate">Taxa de câmbio (USD/BRL):</label>
-      <input type="number" step="0.01" id="exchangeRate" placeholder="Taxa de câmbio (USD/BRL)" required>
+      <input type="number" step="0.01" id="exchangeRate" placeholder="Taxa de câmbio (USD/BRL)">
 
       <label for="monthlyContribution">Aportes mensais (USD):</label>
       <input type="number" step="0.01" id="monthlyContribution" placeholder="Aportes mensais (USD)">
@@ -47,6 +47,7 @@
   <script src="app.js"></script>
 </body>
 </html>
+
 
 
 

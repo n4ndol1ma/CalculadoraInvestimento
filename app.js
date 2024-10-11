@@ -12,8 +12,8 @@ function calculateInvestment(event) {
   const monthlyContribution = parseFloat(document.getElementById("monthlyContribution").value) || 0;
 
   // Validação básica
-  if (initialInvestment <= 0 || annualInterestRate <= 0 || targetAmount <= initialInvestment) {
-    alert("Por favor, verifique os valores inseridos.");
+  if (initialInvestment <= 0 || annualInterestRate <= 0 || targetAmount <= initialInvestment || investmentTerm <= 0) {
+    alert("Por favor, verifique os valores inseridos. O investimento inicial, taxa de juros e valor-alvo devem ser válidos.");
     return;
   }
 
@@ -31,6 +31,12 @@ function calculateInvestment(event) {
     currentAmount *= (1 + monthlyInterestRate);
     currentAmount += monthlyContribution;
     months++;
+
+    // Segurança para evitar loops infinitos
+    if (months > 1200) {  // Limite de 100 anos para o cálculo (1200 meses)
+      alert("O cálculo ultrapassou o limite de tempo possível.");
+      return;
+    }
   }
 
   // Converte para reais e formata
