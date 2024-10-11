@@ -1,3 +1,5 @@
+document.getElementById('investmentForm').addEventListener('submit', calculateInvestment);
+
 function calculateInvestment(event) {
   event.preventDefault();
 
@@ -45,13 +47,14 @@ function calculateInvestment(event) {
 }
 
 function share() {
-if (navigator.share) {
-  navigator.share({
-    title: 'Calculadora de Investimento',
-    text: 'Calcule o tempo necessário para atingir seus objetivos de investimento com nossa calculadora!',
-    url: window.location.href,
-  }).catch(error => console.error('Erro ao tentar compartilhar:', error));
-} else {
-  alert('Compartilhamento não disponível neste navegador.');
+  if (navigator.share) {
+    navigator.share({
+      title: 'Calculadora de Investimento',
+      text: 'Calcule o tempo necessário para atingir seus objetivos de investimento com nossa calculadora!',
+      url: window.location.href,
+    }).catch(error => console.error('Erro ao tentar compartilhar:', error));
+  } else {
+    alert('Compartilhamento não disponível neste navegador.');
+  }
 }
-}
+
