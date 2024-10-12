@@ -6,7 +6,7 @@ function calculateInvestment(event) {
   // Obtendo os valores do formulário
   const initialInvestment = parseFloat(document.getElementById("initialInvestment").value);
   const annualInterestRate = parseFloat(document.getElementById("annualInterestRate").value) / 100;
-  const investmentTerm = parseInt(document.getElementById("investmentTerm").value); // Em dias
+  const investmentTerm = parseInt(document.getElementById("investmentTerm").value); // Em dias (15 ou 30)
   const targetAmount = parseFloat(document.getElementById("targetAmount").value);
   const exchangeRate = parseFloat(document.getElementById("exchangeRate").value) || 1;
   const monthlyContribution = parseFloat(document.getElementById("monthlyContribution").value) || 0;
@@ -17,23 +17,39 @@ function calculateInvestment(event) {
     return;
   }
 
-  // Calcula a taxa de juros mensal
-  const monthlyInterestRate = annualInterestRate / 12;
-
-  // Calcula o número de períodos (meses)
-  const numberOfPeriods = investmentTerm / 30;
+  // Calcula a taxa de juros diária (baseado no prazo anual)
+  const dailyInterestRate = annualInterestRate / 365;
 
   let currentAmount = initialInvestment;
+  let days = 0;
   let months = 0;
+  let tableRows = ''; // Para armazenar as linhas da tabela
+  let previousAmount = initialInvestment;
 
-  // Loop para calcular o valor final
+  // Loop para calcular o valor final, a cada ciclo de reinvestimento
   while (currentAmount < targetAmount) {
-    currentAmount *= (1 + monthlyInterestRate);
+    for (let i = 0; i < investmentTerm; i++) {
+      currentAmount *= (1 + dailyInterestRate);
+    }
     currentAmount += monthlyContribution;
-    months++;
+    days += investmentTerm;
+    months = Math.floor(days / 30);
+
+    // Calcula a porcentagem de ganho no ciclo
+    const percentGain = ((currentAmount - previousAmount) / previousAmount) * 100;
+    previousAmount = currentAmount; // Atualiza o valor anterior para o próximo ciclo
+
+    // Adiciona os dados na tabela
+    const amountInReal = currentAmount * exchangeRate;
+    tableRows += `<tr>
+                    <td>${days} dias (${months} meses)</td>
+                    <td>${currentAmount.toFixed(2)} USD</td>
+                    <td>${amountInReal.toFixed(2)} BRL</td>
+                    <td>${percentGain.toFixed(2)}%</td>
+                  </tr>`;
 
     // Segurança para evitar loops infinitos
-    if (months > 1200) {  // Limite de 100 anos para o cálculo (1200 meses)
+    if (days > 36500) {  // Limite de 100 anos para o cálculo
       alert("O cálculo ultrapassou o limite de tempo possível.");
       return;
     }
@@ -47,8 +63,19 @@ function calculateInvestment(event) {
   const resultDiv = document.getElementById("resultContainer");
   resultDiv.innerHTML = `
     <h2>Resultados</h2>
-    <p>Valor Final: ${formattedFinalAmount}</p>
-    <p>Período Total: ${months} meses</p>
+    <p>Valor Final: ${currentAmount.toFixed(2)} USD (${formattedFinalAmount} BRL)</p>
+    <p>Período Total: ${days} dias (${months} meses)</p>
+    <table>
+      <thead>
+        <tr>
+          <th>Dia</th>
+          <th>Montante Acumulado (USD)</th>
+          <th>Montante Acumulado (BRL)</th>
+          <th>% Ganho no Ciclo</th>
+        </tr>
+      </thead>
+      <tbody>${tableRows}</tbody>
+    </table>
   `;
 }
 
